@@ -164,5 +164,6 @@ def create_parser():
     parser.add_argument('--log_step', type=int, default=1000)
     parser.add_argument('--sample_every', type=int, default=10000)
     parser.add_argument('--checkpoint_every', type=int, default=5000)
-
+    parser.add_argument("--drop_hidden", type=float, default=0.5 )
+    parser.add_argument("--drop_final", type=float, default=0.8)
     return parser
