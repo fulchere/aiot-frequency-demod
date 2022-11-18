@@ -18,7 +18,8 @@ class classificationHybridModel(nn.Module):
         self.conv1 = nn.Conv2d(conv_dim_in, 16, (3, 3), stride=(2, 2), padding=(1, 1))
         self.pool1 = nn.MaxPool2d((2, 2), stride=(2, 2))
         self.dense = nn.Linear(conv_dim_lstm * 4, conv_dim_out * 4)
-        self.fcn1 = nn.Linear(conv_dim_out * 4, conv_dim_out * 2)
+        #self.fcn1 = nn.Linear(conv_dim_out * 4, conv_dim_out * 2)
+        self.fcn1 = nn.Linear(conv_dim_lstm * 4, conv_dim_out * 2)  # refit to linear layer to match dimensions
         self.fcn2 = nn.Linear(2 * conv_dim_out, conv_dim_out)
         self.softmax = nn.Softmax(dim=1)
 
@@ -31,8 +32,8 @@ class classificationHybridModel(nn.Module):
         out = self.pool1(out)
         out = out.view(out.size(0), -1)
 
-        out = self.act(self.dense(out))
-        out = self.drop2(out)
+        #out = self.act(self.dense(out))   #remove dense layer and dropout
+        #out = self.drop2(out)
 
         out = self.act(self.fcn1(out))
         out = self.drop1(out)
