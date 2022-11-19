@@ -11,7 +11,7 @@ class classificationHybridModel(nn.Module):
        Note: Both discriminators D_X and D_Y have the same architecture in this assignment.
     """
 
-    def __init__(self, conv_dim_in=2, conv_dim_out=128, conv_dim_lstm=1024):
+    def __init__(self, conv_dim_in=2, conv_dim_out=128, conv_dim_lstm=1024, hidden = 0.5, final = 0.8):
         super(classificationHybridModel, self).__init__()
 
         self.out_size = conv_dim_out
@@ -23,8 +23,8 @@ class classificationHybridModel(nn.Module):
         self.fcn2 = nn.Linear(2 * conv_dim_out, conv_dim_out)
         self.softmax = nn.Softmax(dim=1)
 
-        self.drop1 = nn.Dropout(0.2)
-        self.drop2 = nn.Dropout(0.5)
+        self.drop1 = nn.Dropout(final)
+        self.drop2 = nn.Dropout(hidden)
         self.act = nn.ReLU()
 
     def forward(self, x):
