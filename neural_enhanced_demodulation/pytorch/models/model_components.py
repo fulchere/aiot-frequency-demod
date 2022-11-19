@@ -11,19 +11,20 @@ class classificationHybridModel(nn.Module):
        Note: Both discriminators D_X and D_Y have the same architecture in this assignment.
     """
 
-    def __init__(self, conv_dim_in=2, conv_dim_out=128, conv_dim_lstm=1024):
+    def __init__(self, conv_dim_in=2, conv_dim_out=128, conv_dim_lstm=1024, hidden = 0.5, final = 0.8):
         super(classificationHybridModel, self).__init__()
 
         self.out_size = conv_dim_out
         self.conv1 = nn.Conv2d(conv_dim_in, 16, (3, 3), stride=(2, 2), padding=(1, 1))
         self.pool1 = nn.MaxPool2d((2, 2), stride=(2, 2))
         self.dense = nn.Linear(conv_dim_lstm * 4, conv_dim_out * 4)
-        self.fcn1 = nn.Linear(conv_dim_out * 4, conv_dim_out * 2)
+        #self.fcn1 = nn.Linear(conv_dim_out * 4, conv_dim_out * 2)
+        self.fcn1 = nn.Linear(conv_dim_lstm * 4, conv_dim_out * 2)  # refit to linear layer to match dimensions
         self.fcn2 = nn.Linear(2 * conv_dim_out, conv_dim_out)
         self.softmax = nn.Softmax(dim=1)
 
-        self.drop1 = nn.Dropout(0.2)
-        self.drop2 = nn.Dropout(0.5)
+        self.drop1 = nn.Dropout(final)
+        self.drop2 = nn.Dropout(hidden)
         self.act = nn.ReLU()
 
     def forward(self, x):
@@ -31,8 +32,8 @@ class classificationHybridModel(nn.Module):
         out = self.pool1(out)
         out = out.view(out.size(0), -1)
 
-        out = self.act(self.dense(out))
-        out = self.drop2(out)
+        #out = self.act(self.dense(out))   #remove dense layer and dropout
+        #out = self.drop2(out)
 
         out = self.act(self.fcn1(out))
         out = self.drop1(out)
