@@ -50,7 +50,8 @@ def create_model(opts):
 
     C_XtoY = classificationHybridModel(conv_dim_in=opts.y_image_channel,
                                        conv_dim_out=opts.n_classes,
-                                       conv_dim_lstm=opts.conv_dim_lstm)
+                                       conv_dim_lstm=opts.conv_dim_lstm
+                                       hidden = opts.drop_hidden, final = opts.drop_final)
 
     if torch.cuda.is_available():
         maskCNN.cuda()
@@ -91,7 +92,7 @@ def load_checkpoint(opts):
 
     C_XtoY = classificationHybridModel(conv_dim_in=opts.x_image_channel,
                                        conv_dim_out=opts.n_classes,
-                                       conv_dim_lstm=opts.conv_dim_lstm)
+                                       conv_dim_lstm=opts.conv_dim_lstm, hidden = opts.drop_hidden, final = opts.drop_final)
 
     C_XtoY.load_state_dict(torch.load(
         C_XtoY_path, map_location=lambda storage, loc: storage),
