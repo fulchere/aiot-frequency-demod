@@ -380,7 +380,8 @@ def training_loop(training_dataloader_X, training_dataloader_Y, testing_dataload
     error_matrix_info = np.array(error_matrix_info)
     scipy.io.savemat(
         opts.root_path + '/' + opts.dir_comment + '_' +
-        str(opts.sf) + '_' + str(opts.bw) + '.mat',
+        str(opts.sf) + '_' + str(opts.bw) + "_" + str(opts.drop_hidden) + "_" + 
+         str(opts.drop_final) + '.mat',
         dict(error_matrix=error_matrix,
              error_matrix_count=error_matrix_count,
              error_matrix_info=error_matrix_info))
