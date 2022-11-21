@@ -58,7 +58,7 @@ To train a model from scratch, we recommand you have a NVIDIA video card, and su
 
 2. run the following command:
 ```
-python main.py --dir_comment sf7_v1 --batch_size 16 --root_path . --data_dir /data/Lora/sf7_125k --groundtruth_code 35 --normalization --train_iter 100000 --ratio_bt_train_and_test 0.8 --network end2end
+python main.py --dir_comment sf7_v1 --batch_size 16 --root_path . --data_dir ./data/Lora/sf7_125k --drop_hidden 0.5 --drop_final 0.8 --groundtruth_code 35 --normalization --train_iter 100000 --ratio_bt_train_and_test 0.8 --network end2end
 ```
 
 3. Check your loss with the std print. e.g.:
