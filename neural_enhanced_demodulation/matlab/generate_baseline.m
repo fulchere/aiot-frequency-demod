@@ -10,7 +10,7 @@ close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Set your own paths
 data_root = '';
-data_dir='/data/Lora/sf7_125k/';
+data_dir='../pytorch/data/Lora/sf7_125k/';
 % generate multi-path signal
 Fs = param_configs(3);         % sample rate
 upsamping_factor = param_configs(4);   
@@ -40,7 +40,7 @@ for BW=BW_list
             end
             raw_data_name_components = strsplit(feature_data_name(1:end-4),'_');
             
-            if (( ~ismember(str2num(raw_data_name_components{2}), SNR_list) || ~ismember(str2num(raw_data_name_components{5}), batch_list))
+            if (( ~ismember(str2num(raw_data_name_components{2}), SNR_list) || ~ismember(str2num(raw_data_name_components{5}), batch_list)))
                 continue;
             end
             
@@ -65,7 +65,7 @@ for BW=BW_list
             error_matrix_count(SNR_index,1)=error_matrix_count(SNR_index,1)+1;
         end
         error_matrix=error_matrix./error_matrix_count;
-        feature_path = [data_root, 'matlab/evaluation/','baseline_error_matrix_',num2str(SF),'_',num2str(BW),'.mat'];
+        feature_path = [data_root, 'evaluation/','baseline_error_matrix_',num2str(SF),'_',num2str(BW),'.mat'];
         save(feature_path, 'error_matrix','SNR_list');
     end
 end
